@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Stuff To Remind Me Of</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="dialog_cancel">Cancel</string>
+	<string name="dialog_ok">OK</string>
+</resources>
