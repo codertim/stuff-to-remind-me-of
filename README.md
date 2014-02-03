@@ -3,7 +3,7 @@
 Android reminder program app
 
 
-Good project to experiment with: Notifications, LED, Asynch Tasks, Vibrate, Services, permissions, Shared Preferences, Dialogs, arrays defined in xml resources, Toasts, etc.
+Good project to experiment with: Notifications, LED, Asynch Tasks, Vibrate, Services, permissions, Shared Preferences, Dialogs, arrays defined in xml resources, Toasts, Broadcast Receivers, etc.
 
 
 Color Schemes
