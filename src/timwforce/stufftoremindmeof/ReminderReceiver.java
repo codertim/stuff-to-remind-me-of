@@ -52,8 +52,8 @@ public class ReminderReceiver extends BroadcastReceiver {
 		// #ff4000 (medium orange)
 		// #ff5300 (light orange)
 		notification.ledARGB = Color.parseColor("#FF4000");
-		notification.ledOffMS = 0;
-		notification.ledOnMS = 1;
+		notification.ledOffMS = 50;
+		notification.ledOnMS = 500;
 		
 
 		// Intent intent = new Intent(this, MainActivity.class);
