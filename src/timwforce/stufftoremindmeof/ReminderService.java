@@ -30,7 +30,6 @@ public class ReminderService extends Service {
 			// new StartServiceAsyncTask().execute(extras.get(MainActivity.MESSAGE_KEY), getBaseContext());
 			Log.d("ReminderService#onStartCommand", "Starting ...");
 			
-			Intent intentForReceiver = setupIntentForReceiver(intent);
 			AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 			Intent alarmIntent = setupIntentForReceiver(intent);
 			
@@ -78,7 +77,7 @@ public class ReminderService extends Service {
 			// get time in minutes from preferences
 			Context context = getApplicationContext();
 			SharedPreferences mySharedPreferences = context.getApplicationContext().getSharedPreferences(MainActivity.MY_PREFS, Activity.MODE_PRIVATE);
-			int whichTimeSelected = mySharedPreferences.getInt("whichTimeSelected", 0);
+			int whichTimeSelected = mySharedPreferences.getInt("whichTimeSelected", -1);
 			Log.d("ReminderService#getMinutesFromPreferences", "SharedPreferences - whichTimeSelected = " + whichTimeSelected);
 			String [] minutesArray = context.getResources().getStringArray(R.array.minutes_array);
 			String minutesText = minutesArray[whichTimeSelected];

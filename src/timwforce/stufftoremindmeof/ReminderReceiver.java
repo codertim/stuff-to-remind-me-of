@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 
@@ -68,8 +69,26 @@ public class ReminderReceiver extends BroadcastReceiver {
 		//		.setContentText("Go to the bank!");		
 		
 		// Vibrate
-		Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-		vibrator.vibrate(500);
+		if(isVibrateSet(context)) {
+			Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+			vibrator.vibrate(500);
+		}
+	}
+	
+	
+	// check if vibration set in app settings
+	private boolean isVibrateSet(Context context) {
+		boolean isVibrate = false;
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		boolean vibratePref = prefs.getBoolean("vibrate", false);
+		Log.i("ReminderReceiver#isVibrateSet", "vibrate pref=" + vibratePref);
+		
+		if(vibratePref == true) {
+			isVibrate = true;
+		}
+		
+		return isVibrate;
 	}
 
 }

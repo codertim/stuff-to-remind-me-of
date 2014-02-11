@@ -19,12 +19,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -43,15 +47,18 @@ public class MainActivity extends Activity implements OnClickListener {
 	public static final  String         MESSAGE_KEY      = "MESSAGE";
 	public static final  String         MY_PREFS         = "MY_PREFS";
 	
-	static {
-		reminders.add(new Reminder("Reminders ...", 5));
-	}
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		// setContentView(R.layout.activity_main);
+		
+		// default minutes is 1, which is first in array, position 0
+    	SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences(MY_PREFS, Activity.MODE_PRIVATE).edit();
+    	editor.putInt("whichTimeSelected", 0);
+    	editor.commit();
+
 		
 		ll = new LinearLayout(this);
 		setupLayout(ll);
@@ -66,29 +73,34 @@ public class MainActivity extends Activity implements OnClickListener {
 		ll.setBackgroundResource(R.drawable.drawable_gradient_background);
 		// ll.setGravity(Gravity.CENTER_HORIZONTAL);
 
-		// text reminders
+		// button for new reminder
+		LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+		buttonLayoutParams.setMargins(10, 20, 10, 2);
+		Button newReminderButton = new Button(this);
+		newReminderButton.setText(getResources().getText(R.string.new_button_label));
+		newReminderButton.setTextColor(getResources().getColor(R.color.button_font));   // set button font color same as app background
+		newReminderButton.setOnClickListener(this);
+		newReminderButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16.0f);
+		ll.addView(newReminderButton, buttonLayoutParams);
+		
+
+		// text 
 		LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(TEXT_VIEW_WIDTH, TEXT_VIEW_HEIGHT);
 		textLayoutParams.setMargins(10, 10, 10, 10);
 		
+		// add reminder list label
+		TextView tvSubtitle = new TextView(this);
+		tvSubtitle.setTypeface(null, Typeface.BOLD);
+		tvSubtitle.setText("Reminders ...");
+		tvSubtitle.setTextColor(getResources().getColor(R.color.text_view_font_color));
+		tvSubtitle.setTextSize(16.0f);
+		tvSubtitle.setGravity(Gravity.CENTER);
+		ll.addView(tvSubtitle, textLayoutParams);
 		
+		// add individual reminders
 		for(Reminder reminder : reminders) {
-			TextView tv = new TextView(this);
-			tv.setTypeface(null, Typeface.BOLD);
-			tv.setText(reminder.getMessage());
-			tv.setTextColor(getResources().getColor(R.color.text_view_font_color));
-			tv.setTextSize(16.0f);
-			ll.addView(tv, textLayoutParams);
+			reminder.addTextViewToLayout(ll, this, textLayoutParams);
 		}
-		
-		// button for new reminder
-		LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-		Button newReminderButton = new Button(this);
-		newReminderButton.setText("New");
-		newReminderButton.setTextColor(getResources().getColor(R.color.button_font));   // set button font color same as app background
-		// newReminderButton.setBackgroundColor(getResources().getColor(R.color.button_new));
-		newReminderButton.setOnClickListener(this);
-		ll.addView(newReminderButton, buttonLayoutParams);
-		
 	}
 	
 	private void askUserForNewReminder() {
@@ -164,8 +176,24 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		
+		// getMenuInflater().inflate(R.menu.main, menu);
+		// return true;
+		
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.action_settings:
+			startActivity(new Intent(this, Prefs.class));
+			return true;
+		}
+		return false;
 	}
 
 }
