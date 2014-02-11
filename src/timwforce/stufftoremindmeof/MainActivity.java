@@ -71,7 +71,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		ll.setOrientation(LinearLayout.VERTICAL);
 		// ll.setBackgroundColor(getResources().getColor(R.color.main_background));	
 		ll.setBackgroundResource(R.drawable.drawable_gradient_background);
-		// ll.setGravity(Gravity.CENTER_HORIZONTAL);
 
 		// button for new reminder
 		LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
