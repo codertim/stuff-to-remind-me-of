@@ -15,7 +15,7 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="microphone.svg"
+   sodipodi:docname="microphone2.svg"
    inkscape:export-filename="/home/tforce/workspace/StuffToRemindMeOf/microphone_100.png"
    inkscape:export-xdpi="45"
    inkscape:export-ydpi="45">
@@ -40,7 +40,8 @@
        y1="1033.3622"
        x2="111"
        y2="1033.3622"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-2,0)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -78,11 +79,11 @@
      id="layer1"
      transform="translate(0,-852.36218)">
     <rect
-       style="fill:url(#linearGradient3111);stroke:#000000;stroke-width:0.64279145000000004;fill-opacity:1"
+       style="fill:url(#linearGradient3111);fill-opacity:1;stroke:#000000;stroke-width:0.64279145"
        id="rect2997"
        width="19.357208"
        height="111.3572"
-       x="89.821396"
+       x="87.821396"
        y="971.18353"
        rx="4.1185546" />
     <rect
@@ -173,7 +174,7 @@
        sodipodi:cy="149.5"
        sodipodi:rx="21.5"
        sodipodi:ry="21.5"
-       d="m 322,149.5 a 21.5,21.5 0 1 1 -43,0 21.5,21.5 0 1 1 43,0 z"
+       d="m 322,149.5 c 0,11.87412 -9.62588,21.5 -21.5,21.5 -11.87412,0 -21.5,-9.62588 -21.5,-21.5 0,-11.87412 9.62588,-21.5 21.5,-21.5 11.87412,0 21.5,9.62588 21.5,21.5 z"
        transform="translate(-201,787.36218)" />
     <rect
        style="fill:#333333;stroke:none"
