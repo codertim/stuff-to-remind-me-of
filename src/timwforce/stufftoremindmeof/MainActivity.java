@@ -17,7 +17,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Typeface;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
@@ -31,8 +34,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -40,13 +45,15 @@ import android.widget.TextView;
 
 
 public class MainActivity extends Activity implements OnClickListener {
-	private static final int            TEXT_VIEW_HEIGHT = 50;
-	private static final int            TEXT_VIEW_WIDTH  = 200;
-	public static final  List<Reminder> reminders        = new ArrayList<Reminder>();
-	private static       LinearLayout   ll               = null;
-	public static final  String         MESSAGE_KEY      = "MESSAGE";
-	public static final  String         MY_PREFS         = "MY_PREFS";
-	
+	private static final int            TEXT_VIEW_HEIGHT  = 50;
+	private static final int            TEXT_VIEW_WIDTH   = 200;
+	public static final  List<Reminder> reminders         = new ArrayList<Reminder>();
+	private static       LinearLayout   ll                = null;
+	public static final  String         MESSAGE_KEY       = "MESSAGE";
+	public static final  String         MY_PREFS          = "MY_PREFS";
+	private static final int            REQUEST_CODE      = 123;
+	private static       ImageButton    voiceImageButton  = null;
+	private static       View           currentDialogView = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,8 @@ public class MainActivity extends Activity implements OnClickListener {
     	SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences(MY_PREFS, Activity.MODE_PRIVATE).edit();
     	editor.putInt("whichTimeSelected", 0);
     	editor.commit();
+    	
+		Log.d("MainActivity#askUserForNewReminder", "voiceImageButton=" + voiceImageButton);
 
 		
 		ll = new LinearLayout(this);
@@ -106,6 +115,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		LayoutInflater layoutInflater = this.getLayoutInflater();
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.MyCustomAlertDialog));
 		final View dialogView = layoutInflater.inflate(R.layout.dialog_new_message, null);
+		currentDialogView = dialogView;
 		alertDialogBuilder.setView(dialogView);
 		alertDialogBuilder.setTitle("Select minutes");
 		// alertDialogBuilder.setContentView(R.layout.dialog_time_input_view);
@@ -156,19 +166,76 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		});
 
+
+		// voiceImageButton = (ImageButton) findViewById(R.id.voice_button);
+		// voiceImageButton.setOnClickListener(this);
+		voiceImageButton = (ImageButton) dialogView.findViewById(R.id.voice_button);
+		voiceImageButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.d("MainActivity - voice image button - onClick", "Starting ...");
+				
+		        // disable if no recognition service is present
+		        PackageManager pm = getPackageManager();
+		        List<ResolveInfo> activities = pm.queryIntentActivities(
+		                new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+		        if (activities.size() == 0)
+		        {
+		        	Log.i("MaintActivity - speech button", "speech NOT enabled");
+		            voiceImageButton.setEnabled(false);
+		            // voiceImageButton.setText("Voice input not available");
+		        } else {
+		        	Log.i("MaintActivity - speech button", "speech enabled");
+		        	Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+		        	intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+		        	intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");
+		        	startActivityForResult(intent, REQUEST_CODE);
+		        }
+			}
+		});
+		
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		Log.d("onClick", "Created AlertDialog");
-		
-		alertDialog.show();		
+
+		alertDialog.show();
+
+
 	}
 	
+	// click handler for speech input
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+    	String firstMatch = null;
+    	
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            // Populate the wordsList with the String values the recognition engine thought it heard
+            ArrayList<String> matches = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            // myWordList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item, matches));
+            Log.i("MainActivity - speech handler - onActivityResult", "ArrayList matches size = " + matches.size());
+            Log.i("MainActivity - speech handler - onActivityResult", "ArrayList matches = " + matches);
+            if(matches.size() > 0) {
+            	firstMatch = matches.get(0);
+            	Log.i("MainActivity - speech handler - onActivityResult", "ArrayList matches first = " + firstMatch);
+				EditText myEditText = (EditText) currentDialogView.findViewById(R.id.edit_text_message);
+				myEditText.setText(firstMatch.trim());
+            }
+
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 	
 	public void onClick(View v) {
 		Log.d("MainActivity", "onClick v.getId() = " + v.getId());
 		
 		// sendNotification();
 		
-		askUserForNewReminder();	
+		askUserForNewReminder();
 	}
 	
 	
