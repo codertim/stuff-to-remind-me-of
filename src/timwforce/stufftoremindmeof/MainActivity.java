@@ -45,8 +45,8 @@ import android.widget.TextView;
 
 
 public class MainActivity extends Activity implements OnClickListener {
-	private static final int            TEXT_VIEW_HEIGHT  = 50;
-	private static final int            TEXT_VIEW_WIDTH   = 200;
+	private static final int            TEXT_VIEW_HEIGHT  = 75;
+	private static final int            TEXT_VIEW_WIDTH   = 300;
 	public static final  List<Reminder> reminders         = new ArrayList<Reminder>();
 	private static       LinearLayout   ll                = null;
 	public static final  String         MESSAGE_KEY       = "MESSAGE";
@@ -94,7 +94,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// text 
 		LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(TEXT_VIEW_WIDTH, TEXT_VIEW_HEIGHT);
-		textLayoutParams.setMargins(10, 10, 10, 10);
+		textLayoutParams.setMargins(10, 2, 10, 2);
 		
 		// add reminder list label
 		TextView tvSubtitle = new TextView(this);
