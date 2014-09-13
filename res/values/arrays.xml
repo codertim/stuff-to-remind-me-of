@@ -10,5 +10,6 @@
         <item>@string/min_choice7</item>
         <item>@string/min_choice8</item>
         <item>@string/min_choice9</item>	
+        <item>@string/min_choice10</item>
     </string-array>
 </resources>
