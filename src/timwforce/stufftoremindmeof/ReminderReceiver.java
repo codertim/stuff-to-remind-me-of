@@ -70,7 +70,7 @@ public class ReminderReceiver extends BroadcastReceiver {
 		// Vibrate
 		if(isVibrateSet(context)) {
 			Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-			vibrator.vibrate(500);
+			vibrator.vibrate(1000);
 		}
 	}
 	
