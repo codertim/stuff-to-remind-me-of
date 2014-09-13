@@ -31,6 +31,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
@@ -68,14 +69,14 @@ public class MainActivity extends Activity implements OnClickListener {
     	
 		Log.d("MainActivity#askUserForNewReminder", "voiceImageButton=" + voiceImageButton);
 
-		
-		ll = new LinearLayout(this);
 		setupLayout(ll);
-		setContentView(ll);
 	}
 	
 	
 	private void setupLayout(LinearLayout ll) {
+		ll = null;
+		ll = new LinearLayout(this);
+		
 		// overall layout
 		ll.setOrientation(LinearLayout.VERTICAL);
 		// ll.setBackgroundColor(getResources().getColor(R.color.main_background));	
@@ -109,6 +110,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		for(Reminder reminder : reminders) {
 			reminder.addTextViewToLayout(ll, this, textLayoutParams);
 		}
+		
+		setContentView(ll);
 	}
 	
 	private void askUserForNewReminder() {
@@ -156,7 +159,16 @@ public class MainActivity extends Activity implements OnClickListener {
 				String message = myEditText.getText().toString();
 				Log.d("onClick", "User entered message: " + message);
 				reminders.add(new Reminder(message, 9));
-				ll.invalidate();
+				
+				// ll.setWillNotDraw(false);
+				// ll.invalidate();
+				// ll.requestLayout();
+				// findViewById(android.R.id.content).invalidate();
+				// ll.refreshDrawableState();
+				
+				
+				setupLayout(ll);
+				
 				dialog.cancel();
 				
 				Intent serviceIntent = new Intent(MainActivity.this, ReminderService.class);
