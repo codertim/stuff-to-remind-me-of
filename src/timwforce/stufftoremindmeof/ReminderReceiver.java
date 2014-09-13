@@ -56,11 +56,10 @@ public class ReminderReceiver extends BroadcastReceiver {
 		notification.ledOffMS = 50;
 		notification.ledOnMS = 500;
 		
-
 		// Intent intent = new Intent(this, MainActivity.class);
 		notification.setLatestEventInfo(context, "Reminder", msg,
-				PendingIntent.getActivity(context, 0, null, 0));
-	            // PendingIntent.getActivity(this, 0, new Intent(), 0));
+	            PendingIntent.getActivity(context, 0, new Intent(), 0));
+			// PendingIntent.getActivity(context, 0, null, 0));
         		// PendingIntent.getActivity(this, 1, intent, 0));
 		mNotificationManager.notify("test" + System.currentTimeMillis(), 100, notification);
 		//NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
