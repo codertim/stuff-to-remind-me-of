@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.speech.RecognizerIntent;
 import android.util.Log;
@@ -103,6 +104,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		tvSubtitle.setText("Reminders ...");
 		tvSubtitle.setTextColor(getResources().getColor(R.color.text_view_font_color));
 		tvSubtitle.setTextSize(16.0f);
+		tvSubtitle.setBackgroundColor(Color.DKGRAY);
 		tvSubtitle.setGravity(Gravity.CENTER);
 		ll.addView(tvSubtitle, textLayoutParams);
 		
