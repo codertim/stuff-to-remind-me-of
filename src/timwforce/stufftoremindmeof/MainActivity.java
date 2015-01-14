@@ -44,6 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.view.View;
 
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -101,12 +102,18 @@ public class MainActivity extends Activity implements OnClickListener {
 		// add reminder list label
 		TextView tvSubtitle = new TextView(this);
 		tvSubtitle.setTypeface(null, Typeface.BOLD);
-		tvSubtitle.setText("Reminders ...");
+		tvSubtitle.setText("Reminders ...          ");
 		tvSubtitle.setTextColor(getResources().getColor(R.color.text_view_font_color));
 		tvSubtitle.setTextSize(16.0f);
-		tvSubtitle.setBackgroundColor(Color.DKGRAY);
+		// tvSubtitle.setBackgroundColor(Color.DKGRAY);
 		tvSubtitle.setGravity(Gravity.CENTER);
 		ll.addView(tvSubtitle, textLayoutParams);
+		
+		LinearLayout.LayoutParams separatorLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5); // LinearLayout.LayoutParams.WRAP_CONTENT);
+		View separatorView = new View(this);
+		separatorView.setLayoutParams(separatorLayoutParams);
+		separatorView.setBackgroundColor(Color.DKGRAY);
+		ll.addView(separatorView, separatorLayoutParams);
 		
 		// add individual reminders
 		for(Reminder reminder : reminders) {
