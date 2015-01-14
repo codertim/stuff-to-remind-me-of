@@ -85,7 +85,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		ll.setBackgroundResource(R.drawable.drawable_gradient_background);
 
 		// button for new reminder
-		LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
 		buttonLayoutParams.setMargins(10, 20, 10, 2);
 		Button newReminderButton = new Button(this);
 		newReminderButton.setText(getResources().getText(R.string.new_button_label));
