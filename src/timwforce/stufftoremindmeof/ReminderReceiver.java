@@ -2,6 +2,7 @@ package timwforce.stufftoremindmeof;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.app.Notification.Builder;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -33,6 +34,7 @@ public class ReminderReceiver extends BroadcastReceiver {
 		NotificationManager mNotificationManager = 
 				(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification notification = new Notification();
+		// notification = new Notification.Builder(context).setContentTitle("Reminder").setContentText(msg).setSmallIcon(android.R.drawable.stat_sys_warning).build();   // required api 11
 		// notification.icon = android.R.drawable.stat_notify_sync;
 		notification.icon = android.R.drawable.stat_sys_warning;
 		notification.tickerText = "Reminder";
@@ -56,10 +58,10 @@ public class ReminderReceiver extends BroadcastReceiver {
 		notification.setLatestEventInfo(context, "Reminder", msg,
 	            PendingIntent.getActivity(context, 0, new Intent(), 0));
 			// PendingIntent.getActivity(context, 0, null, 0));
-        		// PendingIntent.getActivity(this, 1, intent, 0));
+        	// PendingIntent.getActivity(this, 1, intent, 0));
 		mNotificationManager.notify("test" + System.currentTimeMillis(), 100, notification);
 		
-		// Vibrate
+		// Vibrate - phone may vibrate on notification even if vibrate not set in app
 		if(isVibrateSet(context)) {
 			Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 			vibrator.vibrate(1000);
