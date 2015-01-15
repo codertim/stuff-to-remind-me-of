@@ -143,7 +143,6 @@ public class MainActivity extends Activity implements OnClickListener {
             	editor.commit();
             }
 		});
-		Log.d("onClick", "GOT HERE 1");
 
 		alertDialogBuilder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int arg1) {
@@ -160,7 +159,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		alertDialogBuilder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int arg1) {
 				Log.d("onClick", "setPositiveButton#onClick - arg1 = " + arg1);
-				// final EditText myEditText = (EditText) alertDialog.findViewById(R.id.edit_text_message);
 				EditText myEditText = (EditText) dialogView.findViewById(R.id.edit_text_message);
 				Log.d("onClick", "myEditText: " + myEditText);
 				Log.d("onClick", "myEditText.getText(): " + myEditText.getText());
@@ -188,8 +186,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		});
 
 
-		// voiceImageButton = (ImageButton) findViewById(R.id.voice_button);
-		// voiceImageButton.setOnClickListener(this);
 		voiceImageButton = (ImageButton) dialogView.findViewById(R.id.voice_button);
 		voiceImageButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -236,8 +232,8 @@ public class MainActivity extends Activity implements OnClickListener {
             ArrayList<String> matches = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
             // myWordList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item, matches));
-            Log.i("MainActivity - speech handler - onActivityResult", "ArrayList matches size = " + matches.size());
-            Log.i("MainActivity - speech handler - onActivityResult", "ArrayList matches = " + matches);
+            Log.d("MainActivity - speech handler - onActivityResult", "ArrayList matches size = " + matches.size());
+            Log.d("MainActivity - speech handler - onActivityResult", "ArrayList matches = " + matches);
             if(matches.size() > 0) {
             	firstMatch = matches.get(0);
             	Log.i("MainActivity - speech handler - onActivityResult", "ArrayList matches first = " + firstMatch);
@@ -263,9 +259,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		
-		// getMenuInflater().inflate(R.menu.main, menu);
-		// return true;
 		
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
