@@ -22,17 +22,13 @@ public class ReminderReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.d("ReminderReceiver#onReceive", "Starting ...");
-		
-		// String msg = "Test Message";   // (String) parameter[0];
-		// context = (Context) parameter[1];
 		Bundle extras = intent.getExtras();
 		String msg = (String)extras.get(MainActivity.MESSAGE_KEY);
 		Log.d("ReminderRecevier#onReceive", "message = " + msg);
-
 		sendNotification(msg, context);
-
 	}
 
+	
 	private void sendNotification(String msg, Context context) {
 		NotificationManager mNotificationManager = 
 				(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -62,10 +58,6 @@ public class ReminderReceiver extends BroadcastReceiver {
 			// PendingIntent.getActivity(context, 0, null, 0));
         		// PendingIntent.getActivity(this, 1, intent, 0));
 		mNotificationManager.notify("test" + System.currentTimeMillis(), 100, notification);
-		//NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-		//		.setSmallIcon(R.drawable.notification_icon)
-		//		.setContentTitle("My Reminder")
-		//		.setContentText("Go to the bank!");		
 		
 		// Vibrate
 		if(isVibrateSet(context)) {
