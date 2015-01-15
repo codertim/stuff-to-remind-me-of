@@ -181,6 +181,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent serviceIntent = new Intent(MainActivity.this, ReminderService.class);
 				serviceIntent.putExtra(MainActivity.MESSAGE_KEY, message);
 				startService(serviceIntent);
+				hideApp(MainActivity.this);
 			}
 		
 		});
@@ -216,10 +217,16 @@ public class MainActivity extends Activity implements OnClickListener {
 		Log.d("onClick", "Created AlertDialog");
 
 		alertDialog.show();
-
-
 	}
 	
+	
+	private void hideApp(Context context) {
+		Intent startMain = new Intent(Intent.ACTION_MAIN);
+		startMain.addCategory(Intent.CATEGORY_HOME);
+		startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(startMain);
+	}
+
 	// click handler for speech input
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
