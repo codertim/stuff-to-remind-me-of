@@ -6,4 +6,9 @@
         android:title="@string/vibrate_title"
         android:summary="@string/vibrate_summary"
         android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="minimizeOnCreate"
+        android:title="@string/minimize_title"
+        android:summary="@string/minimize_summary"
+        android:defaultValue="false" />
 </PreferenceScreen>

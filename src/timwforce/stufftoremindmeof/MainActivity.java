@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -181,7 +182,14 @@ public class MainActivity extends Activity implements OnClickListener {
 				Intent serviceIntent = new Intent(MainActivity.this, ReminderService.class);
 				serviceIntent.putExtra(MainActivity.MESSAGE_KEY, message);
 				startService(serviceIntent);
-				hideApp(MainActivity.this);
+
+				// hide app if settings allow
+				SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+				boolean isAppGoingToBackgroundOnCreate = sharedPrefs.getBoolean("minimizeOnCreate", false);
+				Log.d("Main Activity - minimizeOnCreate", "Minimize from settings: " + Boolean.valueOf(isAppGoingToBackgroundOnCreate).toString());
+				if(isAppGoingToBackgroundOnCreate) {
+					hideApp(MainActivity.this);
+				}
 			}
 		
 		});
@@ -204,7 +212,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		            voiceImageButton.setEnabled(false);
 		            // voiceImageButton.setText("Voice input not available");
 		        } else {
-		        	Log.i("MaintActivity - speech button", "speech enabled");
+		        	Log.i("MainActivity - speech button", "speech enabled");
 		        	Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		        	intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 		        	intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Voice recognition Demo...");

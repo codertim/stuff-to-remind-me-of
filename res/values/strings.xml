@@ -23,5 +23,8 @@
 
 	<string name="vibrate_title">Vibrate</string>
 	<string name="vibrate_summary">Trigger vibrate when reminder is due</string>
-	
+
+	<string name="minimize_title">Minimize</string>
+	<string name="minimize_summary">Minimize app when new reminder created</string>
+		
 </resources>
