@@ -50,12 +50,11 @@ public class ReminderService extends Service {
 			String ALARM_ACTION = ReminderReceiver.ACTION_DO_REMINDER;
 			Intent intentForReceiver = new Intent(ALARM_ACTION);
 			Bundle extras = intent.getExtras();
-			Log.d("ReminderService#onStartCommand", "extras bundle = " + extras);
+			Log.d("ReminderService#setupIntentForReceiver", "extras bundle = " + extras);
 			String msgFromBundle = (String) extras.getString(MainActivity.MESSAGE_KEY);
-			Log.d("ReminderService#onStartCommand", "********** msgFromBundle = " + msgFromBundle);
+			Log.d("ReminderService#setupIntentForReceiver", "********** msgFromBundle = " + msgFromBundle);
 			intentForReceiver.putExtra(MainActivity.MESSAGE_KEY, msgFromBundle);
 		
-			
 			return(intentForReceiver);
 		}
 		
